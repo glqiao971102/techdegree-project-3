@@ -123,16 +123,33 @@ checkboxes.on('change', e => {
 
     }
     
-
-    
-    //$(clicked).attr('disabled', true)
-
-
-    
-
-    console.log(clicked)
-    console.log(clickedName)
-    
     
 
 })
+
+//"Payment Info" section
+$('#paypal').hide()
+$('#bitcoin').hide()
+
+$('#payment').on("change", () => {
+    
+    if($('#payment option:selected').text() == "Credit Card")
+    {   
+        $('#credit-card').show()
+        $('#paypal').hide()
+        $('#bitcoin').hide()
+        
+    }
+    else if($('#payment option:selected').text() == "PayPal"){
+        
+        $('#paypal').show()
+        $('#credit-card').hide()
+        $('#bitcoin').hide()
+    }else if($('#payment option:selected').text() == "Bitcoin"){
+        
+        $('#bitcoin').show()
+        $('#paypal').hide()
+        $('#credit-card').hide()
+        
+    }
+});
