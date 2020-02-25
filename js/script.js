@@ -80,8 +80,7 @@ $(".addClass").click(function () {
 
 checkboxes.on('change', e => {
 
-    const clicked = e.target;
-    let clickedName = clicked.getAttribute('name');
+    
     
     if ($('input[name="js-frameworks"]').is(':checked')){
 
@@ -153,3 +152,139 @@ $('#payment').on("change", () => {
         
     }
 });
+
+
+function isValidEmail(email) {
+
+    return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
+  
+
+}
+
+function isValidCredit(credit) {
+
+    return /[0-9]{13}|[0-9]{16}/.test(credit)
+
+}
+
+function isValidZip(zip) {
+
+    return /[0-9]{5}/.test(zip)
+
+}
+
+function isValidCVV(cvv) {
+
+    return /[0-9]{3}/.test(cvv)
+
+}
+
+
+
+$('button').on('click', e =>{
+
+    
+
+    const nameInput = $('#name').val();
+    const emailInput = $('#mail').val();
+    const creditCardInput = $('#cc-num').val()
+    const zipInput = $('#zip').val()
+    const cvvInput = $('#cvv').val()
+
+    if (nameInput == '') {
+
+        e.preventDefault();
+        $("#name").css("border-color", "red");
+        $('#name').next().html('<span class="temporary-error-name" style="color:red"><b>Please provide a proper name<b><span>')
+        
+        
+    }else{
+
+        $("#name").css("border-color", "green");
+        $('.temporary-error-name').remove()
+
+    }
+    
+    if(!isValidEmail(emailInput) || emailInput === '') {
+
+        e.preventDefault();
+        $("#mail").css("border-color", "red");
+        $('#mail').next().html('<span class="temporary-error-email" style="color:red"><b>Please provide a proper email<b><span>')
+
+    }else{
+
+        $("#mail").css("border-color", "green");
+        $('.temporary-error-email').remove()
+
+    }
+    
+    if($('.selected').length <= 0) {
+
+        e.preventDefault();
+        $(".activities").css("border-color", "red");
+        $('.activetiesLegend').next().html('<span class="temporary-error-selected" style="color:red"><b>Please at least choose 1 module<b><span>')
+
+    }else {
+
+        $(".activities").css("border-color", "green");
+        $('.temporary-error-selected').remove()
+    }
+    
+    if($('#payment option:selected').text() == "Credit Card" && !isValidCredit(creditCardInput)) {
+
+        e.preventDefault();
+        $("#cc-num").css("border-color", "red");
+        $('#cc-num').attr('placeholder', 'Please type 13 - 16 digits')
+
+
+    }else{
+
+        $("#cc-num").css("border-color", "green");
+        $('#cc-num').attr('placeholder', '')
+
+    }
+    
+    if($('#payment option:selected').text() == "Credit Card" && !isValidZip(zipInput)) {
+
+        e.preventDefault();
+        $("#zip").css("border-color", "red");
+        $('#zip').attr('placeholder', 'Your Postcode ')
+
+
+    }else {
+
+        $("#zip").css("border-color", "green");
+        $('#zip').attr('placeholder', '')
+    }
+    
+    if($('#payment option:selected').text() == "Credit Card" && !isValidCVV(cvvInput)) {
+
+        e.preventDefault();
+        $("#cvv").css("border-color", "red");
+        $('#cvv').attr('placeholder', '3 digits CVV ')
+
+
+
+    }else{
+        
+        $("#cvv").css("border-color", "green");
+        $('#cvv').attr('placeholder', '')
+        
+    
+    }
+    
+    
+
+        
+
+    
+
+    // if  ( !isValidEmail(emailInput) ) {
+
+    //     e.preventDefault();
+    //     alert('Please type correct email')
+    // }
+    
+
+
+})
