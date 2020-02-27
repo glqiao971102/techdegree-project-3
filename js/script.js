@@ -244,7 +244,7 @@ $('button:submit').on('click', e =>{
 
         e.preventDefault();
         $("#mail").css("border-color", "red");
-        $('#mail').next().html('<span class="temporary-error-email" style="color:red"><b>Please enter you email<b><span>')
+        $('#mail').next().next().html('<span class="temporary-error-email" style="color:red"><b>Please enter you email<b><span>')
         
 
     }else if(!isValidEmail(emailInput) ){
@@ -329,12 +329,13 @@ $('button:submit').on('click', e =>{
 })
 
 //For Need work
+//hide the HTML span tag first and for real time error message
 $('.hidden-email').hide();
 
 function showOrHideTip(show, element) {
     
     if (show) {
-      element.style.display = "inherit";
+      element.style.display = "inline-block";
     } else {
       element.style.display = "none";
     }
@@ -350,5 +351,4 @@ function showOrHideTip(show, element) {
     };
   }
 
-  
   $('#mail').on("input", createListener(isValidEmail));
