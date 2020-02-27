@@ -24,26 +24,28 @@ $('#title').on("change", () => {
 $('#color').hide();
 $('#color').html('<option>Please select a T-shirt theme</option>');
 $('#color').show();
-
+//for Need work
+$('#colors-js-puns').hide();
 
 $('#design').on("change", () => {
     //when the user is select any theme, I hide the new option which is 'Please select a T-shirt theme'
     //if the user choose the Theme is JS puns, show the 3 color
     if($('#design option:selected').text() == "Theme - JS Puns")
     {
-        
+        $('#colors-js-puns').show();
         $('#color').hide();
         $('#color').html('<option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option><option value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option> <option value="gold">Gold (JS Puns shirt only)</option> ');
         $('#color').show();
         
     // else if the user choose the Theme is I ♥ JS, it show the 3 color    
     }else if($('#design option:selected').text() == "Theme - I ♥ JS"){
+        $('#colors-js-puns').show();
         $('#color').hide();
         $('#color').html('<option value="tomato">Tomato (I &#9829; JS shirt only)</option><option value="steelblue">Steel Blue (I &#9829; JS shirt only)</option><option value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option> ');
         $('#color').show();
     }// when the user is choose other than this 2 option, the color option go back and show the 'Please select a T-shirt theme'
     else {
-
+        $('#colors-js-puns').hide();
         $('#color').hide();
         $('#color').html('<option>Please select a T-shirt theme</option>');
         $('#color').show();
@@ -211,7 +213,7 @@ function isValidCVV(cvv) {
 //this is to check whether the user is type the correct input value in the name, email, credit card, activity register
 //when the user does not input correct value, it will prevent the submit button the submit the form 
 //the wrong input will show the error message and have the red color border
-$('button').on('click', e =>{
+$('button:submit').on('click', e =>{
 
     
 
@@ -237,13 +239,23 @@ $('button').on('click', e =>{
     }
     
     //this is for the email input, which is combine with isValidEmail(email) function
-    if(!isValidEmail(emailInput) || emailInput === '') {
+    //For need work
+    if(emailInput === '') {
 
         e.preventDefault();
         $("#mail").css("border-color", "red");
-        $('#mail').next().html('<span class="temporary-error-email" style="color:red"><b>Please provide a proper email<b><span>')
+        $('#mail').next().html('<span class="temporary-error-email" style="color:red"><b>Please enter you email<b><span>')
+        
 
-    }else{
+    }else if(!isValidEmail(emailInput) ){
+
+        e.preventDefault();
+        $("#mail").css("border-color", "red");
+        $('#mail').next().html('<span class="temporary-error-email" style="color:red"><b>Please provide proper email format. For example: glqiao971102@gmail.com<b><span>')
+
+    } 
+    
+    else{
 
         $("#mail").css("border-color", "green");
         $('.temporary-error-email').remove()
@@ -312,4 +324,31 @@ $('button').on('click', e =>{
     //when the input is correct format, it allow the button to send the form as default
 
 
+
+
 })
+
+//For Need work
+$('.hidden-email').hide();
+
+function showOrHideTip(show, element) {
+    
+    if (show) {
+      element.style.display = "inherit";
+    } else {
+      element.style.display = "none";
+    }
+  }
+  
+  function createListener(validator) {
+    return e => {
+      const text = e.target.value;
+      const valid = validator(text);
+      const showTip = text !== "" && !valid;
+      const tooltip = e.target.nextElementSibling;
+      showOrHideTip(showTip, tooltip);
+    };
+  }
+
+  
+  $('#mail').on("input", createListener(isValidEmail));
